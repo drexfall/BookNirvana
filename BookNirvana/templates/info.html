@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <!-- <link rel="stylesheet" href="../../static/css/style.css"> -->
+  </head>
+  <body class="info-bg" style="background-image: url({{data.img}});">
+    <main class="info-card">
+      <img class="image" src="{{data.img}}" alt="" />
+      <div class="info-table-wrapper">
+        <h2 class="title">{{data.title}}</h2>
+        <h5 class="author">{{data.author}}</h5>
+        <div class="scrollable-elem">
+          <table class="info-container">
+            <tr>
+              <td>Published by:</td>
+              <td>{{data.publisher}}</td>
+            </tr>
+            <tr>
+              <td>Published on:</td>
+              <td>{{data.publication_date}}</td>
+            </tr>
+            <tr>
+              <td>Genre:</td>
+              <td>{{data.genre}}</td>
+            </tr>
+            <tr>
+              <td>Illustrator:</td>
+              <td>{{data.illustrator}}</td>
+            </tr>
+            <tr>
+              <td>Language:</td>
+              <td>{{data.language}}</td>
+            </tr>
+            <tr>
+              <td>Country:</td>
+              <td>{{data.country}}</td>
+            </tr>
+            <tr>
+              <td>Set in:</td>
+              <td>{{data.set_in}}</td>
+            </tr>
+            <tr>
+              <td>Pages:</td>
+              <td>{{data.pages}}</td>
+            </tr>
+            <tr>
+              <td>ISBN Code:</td>
+              <td>{{data.isbn}}</td>
+            </tr>
+          </table>
+        </div>
+        <section class="button-container">
+          <a href="{% url 'like_book' data.id %}"
+            ><button><ion-icon name="heart-outline"></ion-icon></button
+          ></a>
+          <a href="{% url 'add_to_list' data.id %}"
+            ><button><ion-icon name="bag-add-outline"></ion-icon></button
+          ></a>
+        </section>
+      </div>
+    </main>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

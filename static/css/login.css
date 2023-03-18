@@ -1,0 +1,145 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+body {
+  background-color: var(--bg-500);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+body main {
+  width: 40vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  transition-duration: 0.5s;
+  border-radius: 12pt;
+  color: var(--prim-500);
+  background-color: var(--bg-500);
+  overflow: clip;
+  box-shadow: 0 8pt 16pt rgba(0, 0, 0, 0.8666666667);
+  border-radius: 18pt;
+}
+body main .form-body-wrapper {
+  display: grid;
+}
+body main .form-body-wrapper section {
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body main .form-body-wrapper .main-title {
+  padding: 24pt;
+  box-sizing: border-box;
+}
+body main .form-body-wrapper .main-content {
+  padding: 5%;
+  padding-top: 0;
+  box-sizing: border-box;
+}
+body main .form-body-wrapper .main-content form {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 6pt;
+  background-color: var(--prim-500);
+  padding: 8pt;
+  display: flex;
+  flex-direction: column;
+  align-items: initial;
+  justify-content: initial;
+  gap: 0;
+}
+body main .form-body-wrapper .main-content form .type-toggle-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+}
+body main .form-body-wrapper .main-content form .type-toggle-wrapper a {
+  width: 100%;
+  height: 48pt;
+  background: var(--bg-500);
+  border: 0;
+  border-radius: 3pt 3pt 0 0;
+  color: var(--prim-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background-color: var(--prim-500);
+  color: var(--bg-500);
+}
+body main .form-body-wrapper .main-content form .type-toggle-wrapper a.active {
+  background-color: var(--bg-500);
+  color: var(--prim-500);
+}
+body main .form-body-wrapper .main-content form .form-content {
+  width: 100%;
+  background-color: var(--bg-500);
+  border-radius: 3pt 0pt 3pt 3pt;
+  padding: 12pt;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12pt;
+}
+body main .form-body-wrapper .main-content form .form-content .input-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  width: 100%;
+}
+body .bg-wrapper {
+  --deg: 90deg;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  position: relative;
+  transition-duration: 0.5s;
+  filter: blur(12pt);
+  position: absolute;
+}
+body .bg-wrapper div {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+body .bg-wrapper div img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  filter: brightness(100%) grayscale(100%);
+  transition-duration: 0.4s;
+}
+body .bg-wrapper::after {
+  background: linear-gradient(var(--deg), #ff0000 0% 14.28%, #ff7f00 14.28% 28.56%, #ffff00 28.56% 42.85%, #00ff00 42.85% 57.14%, #0000ff 57.14% 71.42%, #4b0082 71.42% 85.71%, #9400d3 85.71% 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  content: "";
+  z-index: 2;
+  filter: brightness(75%) saturate(85%);
+  mix-blend-mode: overlay;
+}
+
+@media screen and (max-width: 660px) {
+  body .bg-wrapper {
+    --deg: 180deg;
+    grid-template-columns: unset;
+    grid-template-rows: repeat(7, 1fr);
+  }
+}/*# sourceMappingURL=login.css.map */

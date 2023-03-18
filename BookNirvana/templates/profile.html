@@ -1,0 +1,14 @@
+{% extends 'home.html' %}
+{% block 'content' %}
+    <h1>Welcome {{user.username}}!</h1>
+    <div>
+      <h3>Shelves</h3>
+	  {% if shelves %}
+    
+	  {% else %}
+	  <p>No you don't have any shelf!</p>
+	  {% endif %}
+    </div>
+  </body>
+</html>
+{% endblock %}
