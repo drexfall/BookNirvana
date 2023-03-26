@@ -1,14 +1,78 @@
-{% extends 'home.html' %}
+{% extends 'home.html' %} {% load static %} {% block 'title' %}
+<title>Profile - BookNirvana</title>
+{% endblock %} 
+{% block 'style' %}
+    <style>
+      body {
+        background-image: url("{% static 'bg.png' %}");
+      }
+    </style>
+    {% endblock %}
 {% block 'content' %}
-    <h1>Welcome {{user.username}}!</h1>
-    <div>
-      <h3>Shelves</h3>
-	  {% if shelves %}
-    
-	  {% else %}
-	  <p>No you don't have any shelf!</p>
-	  {% endif %}
+<div class="welcome-banner">
+  <section class="title-wrapper">
+    <h2>Hello {{user.first_name}}</h2>
+    {% if user.bio %}
+    <p>{{user.bio}}</p>
+    {% else %}
+    <p>Bored? Curious? Whatever, we definitely have a book!</p>
+    {% endif %}
+    <div class="social-link-wrapper">
+      {% for name,url in user.social_links.items %}
+      <a href="{{url}}" target="_blank">
+        <button>
+          <ion-icon name="logo-{{name.lower}}"></ion-icon>
+        </button>
+      </a>
+      {% endfor %}
     </div>
-  </body>
-</html>
+  </section>
+  <section class="dp-wrapper">
+    {{user.username}}
+    {% if user.profile_photo %}
+    <img src="/{{user.profile_photo}}" class="pp" alt="" />
+    {% else %}
+    <img src="{% static 'def_user.png' %}" class="pp" alt="" />
+    {% endif %}
+    <div class="button-group">
+      <a href="{% url 'settings' %}">
+        <button>
+          <ion-icon name="settings-outline"></ion-icon>
+        </button>
+      </a>
+      <a href="{% url 'edit_profile' %}">
+        <button>
+          <ion-icon name="pencil-outline"></ion-icon>
+        </button>
+      </a>
+      <button onclick="shelvesOpen()">
+        <ion-icon name="library-outline"></ion-icon>
+      </button>
+    </div>
+    <script>
+      function shelvesOpen() {
+        let text = prompt("Enter a new name for your shelf:");
+        if (text != null && text != "") {
+          location.href = "/user/profile/shelf/new/"+text
+        }
+        document.getElementById("demo").innerHTML = text;
+      }
+    </script>
+  </section>
+</div>
+<main>
+  <h2 style="font-size: 3rem; letter-spacing: 1pt;">Shelves</h2>
+  <div class="shelves-wrapper">
+    {% if data.shelves %} {% for shelf_id,shelf in data.shelves.items %} 
+    {% include 'components/bookgallery.html' %} {% endfor %} {% else %}
+    <p>You don't have any shelf!</p>
+    {% endif %}
+  </div>
+  <div class="book-gallery">
+    <h4 class="gallery-header">Suggestions:</h4>
+    <section class="gallery-body">
+      {% for book in suggested %} {% include 'components/bookcard.html' %} {% endfor %}
+    </section>
+  </div>
+</main>
 {% endblock %}

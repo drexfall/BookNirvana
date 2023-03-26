@@ -1,22 +1,26 @@
-{% extends 'home.html' %}
-{% block 'content' %}
-	<form action="" method="post">
-		{% csrf_token %}
-		<input type="search" name="search" id="">
-		<input type="submit" value="Submit">
-	</form>
-	<section class="result-grid">
-		{% for i in data.result %}
-		<a href="{% url 'info' i.id %}" class="book-card">
-			<section class="image-wrapper">
-				<img class="image" src="{{i.img}}" alt="" srcset="">
-			</section>
-			<section class="info">
-				<h4 class="title">{{i.title}}</h4>
-				<h5 class="author">{{i.author}}</h5>
-				<p class="desc"></p>
-			</section>
-		</a>
-		{%endfor%}
-	</section>
+{% extends 'home.html' %} {% block 'title' %}
+<title>Search - BookNirvana</title>
+{% endblock %} {% block 'content' %}
+<main>
+  <form action="" method="post" class="search-wrapper">
+    {% csrf_token %}
+    <input type="search" name="search" id="" />
+    <input type="submit" value="Submit" />
+  </form>
+  {% if data.empty %}
+  <section>
+    <h4>We don't have the book you searched for!</h4>
+    <ul>
+      <li>Look for any spelling errors</li>
+      <li>Make sure you didn't miss out any words</li>
+      <li>Try not to use special characters</li>
+    </ul>
+  </section>
+  {% else %}
+  <section class="result-grid book-gallery">
+    {% for book in data.result %} {% include 'components/bookcard.html' %}
+    {%endfor%}
+  </section>
+  {% endif %}
+</main>
 {% endblock %}

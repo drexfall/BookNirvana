@@ -1,77 +1,113 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <!-- <link rel="stylesheet" href="../../static/css/style.css"> -->
-  </head>
-  <body class="info-bg" style="background-image: url({{data.img}});">
-    <main class="info-card">
-      <img class="image" src="{{data.img}}" alt="" />
-      <div class="info-table-wrapper">
-        <h2 class="title">{{data.title}}</h2>
-        <h5 class="author">{{data.author}}</h5>
-        <div class="scrollable-elem">
-          <table class="info-container">
-            <tr>
-              <td>Published by:</td>
-              <td>{{data.publisher}}</td>
-            </tr>
-            <tr>
-              <td>Published on:</td>
-              <td>{{data.publication_date}}</td>
-            </tr>
-            <tr>
-              <td>Genre:</td>
-              <td>{{data.genre}}</td>
-            </tr>
-            <tr>
-              <td>Illustrator:</td>
-              <td>{{data.illustrator}}</td>
-            </tr>
-            <tr>
-              <td>Language:</td>
-              <td>{{data.language}}</td>
-            </tr>
-            <tr>
-              <td>Country:</td>
-              <td>{{data.country}}</td>
-            </tr>
-            <tr>
-              <td>Set in:</td>
-              <td>{{data.set_in}}</td>
-            </tr>
-            <tr>
-              <td>Pages:</td>
-              <td>{{data.pages}}</td>
-            </tr>
-            <tr>
-              <td>ISBN Code:</td>
-              <td>{{data.isbn}}</td>
-            </tr>
-          </table>
-        </div>
-        <section class="button-container">
-          <a href="{% url 'like_book' data.id %}"
-            ><button><ion-icon name="heart-outline"></ion-icon></button
-          ></a>
-          <a href="{% url 'add_to_list' data.id %}"
-            ><button><ion-icon name="bag-add-outline"></ion-icon></button
-          ></a>
-        </section>
+{% extends 'home.html' %} {% load static %} 
+{% block 'title' %}
+    <title>{{data.title}} - BookNirvana</title>
+    {% endblock %}
+{% block 'style' %}
+<style>
+  body {
+    background-image: url("{{data.img}}");
+  }
+</style>
+{% endblock %} {% block 'content' %}
+<main>
+  <div class="info-card">
+    <img class="image" src="{{data.img}}" alt="" />
+    <div class="info-table-wrapper">
+      <h2 class="title">{{data.title}}</h2>
+      <h5 class="author">{{data.author}}</h5>
+      <div class="scrollable-elem">
+        <table class="info-container">
+          <tr>
+            <td>Published by:</td>
+            <td>{{data.publisher}}</td>
+          </tr>
+          <tr>
+            <td>Published on:</td>
+            <td>{{data.publication_date}}</td>
+          </tr>
+          <tr>
+            <td>Genre:</td>
+            <td>{{data.genre}}</td>
+          </tr>
+          <tr>
+            <td>Illustrator:</td>
+            <td>{{data.illustrator}}</td>
+          </tr>
+          <tr>
+            <td>Language:</td>
+            <td>{{data.language}}</td>
+          </tr>
+          <tr>
+            <td>Country:</td>
+            <td>{{data.country}}</td>
+          </tr>
+          <tr>
+            <td>Set in:</td>
+            <td>{{data.set_in}}</td>
+          </tr>
+          <tr>
+            <td>Pages:</td>
+            <td>{{data.pages}}</td>
+          </tr>
+
+          <tr>
+            <td>ISBN Code:</td>
+            <td>{{data.isbn}}</td>
+          </tr>
+        </table>
       </div>
-    </main>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
-  </body>
-</html>
+      <section class="button-container">
+        <a href="{% url 'like_book' data.id %}"
+        ><button>
+          {% if data.liked %}
+          <ion-icon name="heart"></ion-icon>
+          {% else %}
+          <ion-icon name="heart-outline"></ion-icon>
+          {% endif %}
+        </button></a
+        >
+        <form action="{% url 'add_to_list' data.id %}" method="post">
+          {% csrf_token %}
+          <select name="shelf_list" id="shelf_list_selector">
+            {% for shelf_id,shelf_items in data.shelves.items %}
+            <option value="{{shelf_id}}">{{shelf_items.name}}</option>
+            {% endfor %}
+          </select>
+          <button type="submit">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </button>
+        </form>
+        <a href="{% url 'add_review' data.id %}"><button>
+          <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+        </button></a>
+      </section>
+    </div>
+  </div>
+  <div class="review-card">
+    <section>
+      {% if data.reviews %}
+      <table> 
+    {% for review_id,review in data.reviews.items %}
+    <tr>
+    <div class="review-item">
+      <span style="font-weight: bold;">{{review.reviewer}}</span> says <span style="font-style: italic;">"{{review.comment}}"</span>
+      {{review.rating}} stars
+    </div>
+  </tr>
+    {% endfor %}
+  </table>
+    {% else %}
+    <p>Be the first one to review this book!</p>
+    {% endif %}
+    </section>
+  </div>
+</main>
+<script
+  type="module"
+  src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+></script>
+{% endblock %}

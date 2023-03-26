@@ -1,0 +1,44 @@
+{% extends 'home.html' %} {% block 'title' %}
+<title>Search - BookNirvana</title>
+{% endblock %} {% block 'content' %}
+<main>
+  <form action="" method="post" class="edit-form"  enctype=multipart/form-data>
+    {% csrf_token %} {% for field in form %}
+    <div class="input-container">{{field}} {{field.label_tag}}</div>
+    {% endfor %}
+    <div class="button-group">
+      <button type="button" onclick="addSocial()">Add social</button>
+      <input type="submit" value="Submit" />
+    </div>
+  </form>
+  <script>
+    c = 1;
+    form = document.querySelector("form")
+    function addSocial() {
+        let text = prompt("Enter website name: ");
+        let name;
+        if (text != null && text != "") {
+            
+        let container = document.createElement("div")
+        container.classList.add("input-container")
+
+        let input = document.createElement("input")
+        input.id = "id_social_"+c
+        input.name = text
+        input.maxLength = 1000
+        input.type = "url"
+
+        let label = document.createElement("label")
+        label.for = input.id
+        label.textContent = text
+
+        container.append(input)
+        container.append(label)
+        form.insertBefore(container,form.lastElementChild)
+        c+=1
+        }
+
+    }
+  </script>
+</main>
+{% endblock %}

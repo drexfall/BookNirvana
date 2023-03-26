@@ -1,0 +1,17 @@
+<div class="book-gallery">
+    <div class="gallery-header">
+      <a href="{% url 'delete_shelf' shelf_id %}">
+      <h4 class="title">{{shelf.name}}</h4>
+      </a></div>
+    {% if shelf.books.items %}
+    <section class="gallery-body">
+      {% for book_id,book in shelf.books.items %}
+      {% include 'components/bookcard.html' %} 
+      {% endfor %}
+    </section>
+    {% else %}
+    <section>
+      <p style="font-weight: 300; font-style: italic;">There are no books here!</p>
+    </section>
+    {% endif %}
+  </div>

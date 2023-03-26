@@ -1,36 +1,26 @@
-{% extends 'home.html' %} {% load static %} {% block 'content' %}
+{% extends 'home.html' %} {% load static %} {% block 'title' %}
+<title>Authenticate - BookNirvana</title>
+{% endblock %} {% block 'content' %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}" />
 
 <main>
   <div class="form-body-wrapper">
-    <section class="main-title">
-      <h1>Welcome to BookNirvana</h1>
-    </section>
     <section class="main-content">
-      <form class="login-form" action="" method="post">
+      <form class="{{type}}-form" action="" method="post">
         {% csrf_token %}
         <div class="type-toggle-wrapper">
-          {% if type == 'login' %}
-          <a href="{% url 'login' %}" class="active">
+          <a href="{% url 'login' %}">
             <span>Login</span>
           </a>
           <a href="{% url 'register' %}">
             <span>Register</span>
           </a>
-          {% else %}
-          <a href="{% url 'login' %}">
-            <span>Login</span>
-          </a>
-          <a href="{% url 'register' %}" class="active">
-            <span>Register</span>
-          </a>
-          {% endif %}
         </div>
         <div class="form-content">
           <div class="input-wrapper">
             {% for field in form %}
-              {{ field.label_tag }}
-              {{ field }}
+            <div class="input-container">{{field}} {{field.label_tag}}</div>
+            {{field.errors}}
             {% endfor %}
           </div>
           {% if type == 'login' %}
@@ -50,8 +40,8 @@
   let toggleWrapper = document.querySelector(".type-toggle-wrapper");
   let bgWrapper = document.querySelector(".bg-wrapper");
   let loginDiv = document.querySelector("main");
-  let errorItems = document.querySelectorAll(".errorlist")
-  
+  let errorItems = document.querySelectorAll(".errorlist");
+
   let bgElems = 0;
   for (let index = 0; index < toggleWrapper.childElementCount; index++) {
     const element = toggleWrapper.children[index];
@@ -59,53 +49,52 @@
   }
   for (let index = 0; index < errorItems.length; index++) {
     const element = errorItems[index];
-    
   }
-  async function elemCheck() {
-    if (bgElems < 6) {
-      bgElems += 1;
-    } else if (bgElems == 6) {
-      for (let i = 0; i < bgWrapper.childElementCount; i++) {
-        setTimeout(() => {
-          document
-            .querySelector(`#imageWrapper${i + 1}`)
-            .children[0].classList.remove("hidden");
-        }, 100 * i);
-      }
-      loginDiv.classList.remove("hidden");
-    }
-  }
-  window.addEventListener("load", () => {
-    loginDiv.classList.add("hidden");
-    for (let index = 0; index < 7; index++) {
-      let imageWrapper = document.createElement("div");
-      imageWrapper.id = `imageWrapper${index + 1}`;
-      bgWrapper.append(imageWrapper);
-    }
-    fetch(
-      "https://api.unsplash.com/search/photos?query=books&client_id=0F14mE9boRm8LEoYdMAA-oXBK_9cRW6MuB0h9IhGPYo"
-    )
-      .then((request) => {
-        return request.json();
-      })
-      .then((data) => {
-        for (let index = 0; index < bgWrapper.childElementCount; index++) {
-          let image = document.createElement("img");
+  // async function elemCheck() {
+  //   if (bgElems < 6) {
+  //     bgElems += 1;
+  //   } else if (bgElems == 6) {
+  //     for (let i = 0; i < bgWrapper.childElementCount; i++) {
+  //       setTimeout(() => {
+  //         document
+  //           .querySelector(`#imageWrapper${i + 1}`)
+  //           .children[0].classList.remove("hidden");
+  //       }, 100 * i);
+  //     }
+  //     loginDiv.classList.remove("hidden");
+  //   }
+  // }
+  // window.addEventListener("load", () => {
+  //   loginDiv.classList.add("hidden");
+  //   for (let index = 0; index < 7; index++) {
+  //     let imageWrapper = document.createElement("div");
+  //     imageWrapper.id = `imageWrapper${index + 1}`;
+  //     bgWrapper.append(imageWrapper);
+  //   }
+  //   fetch(
+  //     "https://api.unsplash.com/search/photos?query=books&client_id=0F14mE9boRm8LEoYdMAA-oXBK_9cRW6MuB0h9IhGPYo"
+  //   )
+  //     .then((request) => {
+  //       return request.json();
+  //     })
+  //     .then((data) => {
+  //       for (let index = 0; index < bgWrapper.childElementCount; index++) {
+  //         let image = document.createElement("img");
 
-          const params = new URLSearchParams(window.location.search);
-          if (params.get("source") == "registration_page") {
-            image.style.animation = "unset";
-            loginDiv.style.animation = "unset";
-            loginDiv.classList.remove("hidden");
-          } else {
-            image.classList.toggle("hidden");
-            image.addEventListener("load", elemCheck);
-          }
+  //         const params = new URLSearchParams(window.location.search);
+  //         if (params.get("source") == "registration_page") {
+  //           image.style.animation = "unset";
+  //           loginDiv.style.animation = "unset";
+  //           loginDiv.classList.remove("hidden");
+  //         } else {
+  //           image.classList.toggle("hidden");
+  //           image.addEventListener("load", elemCheck);
+  //         }
 
-          image.src = data.results[index].urls.regular;
-          document.querySelector(`#imageWrapper${index + 1}`).append(image);
-        }
-      });
-  });
+  //         image.src = data.results[index].urls.regular;
+  //         document.querySelector(`#imageWrapper${index + 1}`).append(image);
+  //       }
+  //     });
+  // });
 </script>
 {%endblock%}

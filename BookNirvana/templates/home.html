@@ -5,11 +5,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link
+      rel="shortcut icon"
+      href="{% static 'favicon.png' %}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    {% block 'title' %}
+    <title>Home - BookNirvana</title>
+    {% endblock %} {% block 'style' %}
+    <style>
+      body {
+        background-image: url("{% static 'bg.png' %}");
+      }
+    </style>
+    {% endblock %}
   </head>
   <body>
     <header>
+      <img src="{% static 'Logo.png' %}" alt="BookNirvana" />
       <h1>BookNirvana</h1>
       <nav>
         <ul>
@@ -17,21 +31,53 @@
           <li><a href="{% url 'search' %}">Search</a></li>
           {% if user.is_authenticated %}
           <li>
-			<a href="{% url 'profile' %}">Profile</a></li>
-      <li>
-			<a href="{% url 'logout' %}">Logout</a>
-      </li>
-			{% else %}
-      <li>
-			<a href="{% url 'login' %}">Login</a>
-    </li>
-			{% endif %}
+            <a href="{% url 'profile' %}">Profile</a>
+          </li>
+          <li>
+            <a href="{% url 'logout' %}">Logout</a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{% url 'login' %}">Login</a>
+          </li>
+          {% endif %}
         </ul>
       </nav>
     </header>
     {% block 'content' %}
-	<main></main>
-	{% endblock %}
-    <footer></footer>
+
+    <main>
+      <h2 class="home-title">BookNirvana</h2>
+      <p class="home-quote">"If you don't like to read, you haven't found the right book yet!" <span>~ J. K. Rowling</span></p>
+      <img src="{% static 'bg.jpg' %}" alt="" />
+    </main>
+    {% endblock %}
+    <footer>
+      <p>© BookNirvana</p>
+      <!-- <button onclick="themeToggle(this)" data-theme = "light">
+        <ion-icon name="sunny"></ion-icon>
+      </button> -->
+    </footer>
+    <script>
+      function themeToggle(button) {
+        let name = button.getAttribute("data-theme")
+        if(name=="moon"){
+          button.setAttribute("data-theme","sunny")
+          document.documentElement.setAttribute("prefers-color-scheme","dark")
+          
+        }else{
+          button.setAttribute("data-theme","moon")
+          button.firstElementChild.name = "moon"
+          document.documentElement.setAttribute("prefers-color-scheme","light")}
+      }
+    </script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
   </body>
 </html>

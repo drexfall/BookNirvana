@@ -25,19 +25,20 @@ SECRET_KEY = 'django-insecure-r9)mv&mfdwe(e15z_#!zh&2^n2#s=if)ou98t*c@pfmage+rv1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.29.55","127.0.0.1"]
-
+ALLOWED_HOSTS = ["192.168.29.55","127.0.0.1","192.168.1.11","192.168.1.42","192.168.201.189","192.168.208.34"]
 
 # Application definition
 
 INSTALLED_APPS = [
+    "livereload",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "BookNirvana.apps.BooknirvanaConfig"
+    "BookNirvana.apps.BooknirvanaConfig",
+    'simple_history',
 ]
 
 MIDDLEWARE = [
@@ -48,8 +49,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'livereload.middleware.LiveReloadScript',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
-
 ROOT_URLCONF = 'MiniProject.urls'
 
 TEMPLATES = [
@@ -106,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -129,3 +131,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = "/user/login"
 LOGIN_REDIRECT_URL = "/user/profile"
 LOGOUT_REDIRECT_URL = "/home"
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
